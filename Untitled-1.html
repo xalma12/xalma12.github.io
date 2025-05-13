@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¡Feliz Cumpleaños!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      text-align: center;
+      color: #333;
+    }
+    h1 {
+      font-size: 3em;
+      margin-top: 50px;
+      animation: brilla 1s infinite alternate;
+    }
+    @keyframes brilla {
+      from { text-shadow: 0 0 10px #ff6f61; }
+      to { text-shadow: 0 0 20px #ffc107; }
+    }
+    button {
+      background-color: #ff6f61;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin: 20px;
+    }
+    button:hover {
+      background-color: #e64a19;
+      transform: scale(1.05);
+    }
+    .imagenes {
+      display: none;
+      margin-top: 20px;
+    }
+    .imagenes img {
+      width: 250px;
+      margin: 10px;
+      border-radius: 15px;
+      animation: aparecer 1s ease-in-out;
+    }
+    @keyframes aparecer {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 ¡Feliz Cumpleaños! 🎂</h1>
+  <p>Haz clic para ver tu sorpresa especial:</p>
+  <button onclick="mostrarSorpresa()">🎁 Mostrar Sorpresa</button>
+
+  <div class="imagenes" id="imagenes">
+    <img src="Imagen de WhatsApp 2025-05-13 a las 17.13.03_a095df31.jpg" alt="Imagen de cumpleaños">
+    <img src="Imagen de WhatsApp 2025-05-13 a las 17.13.03_a095df31.jpg" alt="Imagen de cumpleaños">
+  </div>
+
+  <!-- Música aún más alegre -->
+  <audio id="musica" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"></audio>
+
+  <canvas id="confetti"></canvas>
+
+  <script>
+    function mostrarSorpresa() {
+      document.getElementById("imagenes").style.display = "block";
+      document.getElementById("musica").play();
+      lanzarConfeti();
+    }
+
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let pieces = [];
+    for (let i = 0; i < 150; i++) {
+      pieces.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 10 + 5,
+        speed: Math.random() * 3 + 2,
+        color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+        angle: Math.random() * Math.PI * 2
+      });
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        p.y += p.speed;
+        p.x += Math.sin(p.angle) * 2;
+        if (p.y > canvas.height) p.y = 0;
+      });
+      requestAnimationFrame(drawConfetti);
+    }
+
+    function lanzarConfeti() {
+      drawConfetti();
+    }
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
